@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>UTUT</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>UTUT</h2>
+        <h4>Many-to-Many Spoken Language Translation via<br>Unified Speech and Text Representation Learning with Unit-to-Unit Translation</h4>
+		[<a href="https://arxiv.org/abs/2308.01831">Paper</a>] [<a href="https://github.com/choijeongsoo/utut">Code</a>]
+
+        <p class="fst-italic mb-0">
+          <br>
+		  Minsu Kim∗, Jeongsoo Choi∗, Dahun Kim, Yong Man Ro
+        </p>
+		<p></p>
+        <p><b>KAIST</b></p>
+	</div>
+	<p>
+        <b>Abstract.</b>
+		In this paper, we propose a method to learn unified representations of multilingual speech and text with a single model, especially focusing on the purpose of speech synthesis. We represent multilingual speech audio with speech units, the quantized representations of speech features encoded from a self-supervised speech model. Therefore, we can focus on their linguistic content by treating the audio as pseudo text and can build a unified representation of speech and text. Then, we propose to train an encoder-decoder structured model with a Unit-to-Unit Translation (UTUT) objective on multilingual data. Specifically, by conditioning the encoder with the source language token and the decoder with the target language token, the model is optimized to translate the spoken language into that of the target language, in a many-to-many language translation setting. Therefore, the model can build the knowledge of how spoken languages are comprehended and how to relate them to different languages. A single pre-trained model with UTUT can be employed for diverse multilingual speech- and text-related tasks, such as Speech-to-Speech Translation (STS), multilingual Text-to-Speech Synthesis (TTS), and Text-to-Speech Translation (TTST). By conducting comprehensive experiments encompassing various languages, we validate the efficacy of the proposed method across diverse multilingual tasks. Moreover, we show UTUT can perform many-to-many language STS, which has not been previously explored in the literature.
+	</p>
+	<p>
+		<ul>
+			<li>For each task, one unified multilingual model was used.</li>
+			<li>The samples were randomly selected from <a href="https://www.mllp.upv.es/europarl-st">Europarl-ST</a> dataset.</li>
+		</ul>
+	</p>
+	<p>
+		<b>Contents</b>
+		<ul>
+			<li><a href="#model-overview">Model Overview</a></li>
+			<li><a href="#sts-samples">Multilingual Speech-to-Speech Translation</a></li>
+			<li><a href="#tts-samples">Multilingual Text-to-Speech Synthesis</a></li>
+			<li><a href="#ttst-samples">Multilingual Text-to-Speech Translation</a></li>
+    	</ul>
+	</p>	
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">		
+	<h2 id="model-overview" style="text-align: center;">Model Overview</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/overview.png" height="400" width="800">
+	</p>
+	</body>
+		<p style="text-align: center;" >
+			<b>Figure.</b> Overview of the proposed UTUT framework. (a) Since different languages can be represented with a common phoneme set, it is possible to quantize multilingual speech audio into speech units with a fixed vocabulary size. (b) The model is trained with a unit-to-unit translation objective by setting the model’s inputs and outputs as speech units from a source and a target language.
+		</p>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="sts-samples" style="text-align: center;">Multilingual Speech-to-Speech Translation</h2>
+	<br>
+	<h4 style="text-align: center;">from German</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source<br>(transcription)</th>
+					<th style="text-align: center">Target Language</th>
+					<th style="text-align: center">UTUT<br>(ASR transcribed)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>Trotz der Vorgaben des Konvents wurde uns nichts geschenkt.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>so what the convention provided was did not yet have</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>en su conjunto lo que nos preve el convenio no ha sido un regalo el consejo</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>en ce sens ce que la convention nous a prévue n'a pas encore été donnée</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>al contempo quello che cià previsto la convenzione non era ancora maè dato</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/1.de-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>dat waar ons conventie ons heeft voorgesteld was toch nog niet doorgegeven</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>Grüße an alle, auf Wiedersehen im Himmel.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>welcome every one in the hill</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>todos acogemos en el miedo</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>ou nous félicitons de nouveau dans le silence</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>tutti a vedono a resistenza nel cielo</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/2.de-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>iedereen war een ciete in de helfen in de helfen</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>Das wird im Jemen nicht zum Ziel führen, sondern wir sollten uns darauf konzentrieren, welche Hilfe wir ganz konkret in der jetzigen Situation leisten können, um ein akutes Problem zu lösen.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>i think that will not lead to the objective we should concentrate on the assistance we can provide in the current situation so that we can resolve an acute problem</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>iso no va llevar al objetvo yemen sino que tenemos ayudar completamente en la situación actual para poder resolver un problema acuto</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>je pense que cela ne conduira pas aux objectifs nous devrions nous concentrer sur laide concrète que nous pouvons apporter dans la situation actuelle pour résoudre un problème à cute</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>questo a non porterà allobbiettivo  del jemen e dobbiamo a concentrarci  sulla situazione acuta a della situazione attuale</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/de-X/3.de-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>dat zal niet in jemen tot de doelstelling leiden we moeten ons concentreren op welke hulp we kunnen leveren in deze situatie om een acued probleem op te lozen</p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<h4 style="text-align: center;">from English</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source<br>(transcription)</th>
+					<th style="text-align: center">Target Language</th>
+					<th style="text-align: center">UTUT<br>(ASR transcribed)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>Mr Stevenson said that longer journeys were unavoidable – I say: not so.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>her stevens sie haben gesagt dass die längeren reisen nicht vermeidbar sind aber nein</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>r stevens en dijo que los viajes más largos eran inevitables así que no</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>madame stevenson vous avez dit que les voyages plus longs ont été inévitables alors je dirai pas</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>sventestivenson diceva che i viaggi più lunghi sono inevitabili di cono no aerege</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/1.en-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>stvens u zeid dater langere reizen op mij baansein ik zeg niet</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>Firstly Parliament can bring both sides together to talk; secondly we should stand behind the Commission and the Council and support their efforts; and finally we should firmly support the Egyptian track of negotiations, because that is the only track that can lead to a solution and to the ceasefire which we currently all hope for.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>mament kann beide seiten zusammenbringen und dann auch zusammenbringen und wir sollten dann auch die verhandlungen in ägypten unterstützen denn das r kann einen waffenstillstand führen die wir alle hoffen</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>puede hablar entre ambas partes apoyar a la comisión y al consejo y apoyar sus esfuerzos y apoyar firmemente el camino de las negociaciones de egipto porque solo es el camino para alcanzar una solución y un altofuego que esperamos todos</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>tout dabord le parlement peut faire converger les deux parties ensuite soutenir les efforts de la commission et du conseil et soutenir la situation de négociations qui permettrait davoir un cessez-le-feu que nous espérons tous actuellement</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>amento può portare anbe le parti a parlare dobbiamo appoggiare la commessione il consiglio per sostenere gli sforzi e dobbiamo appoggiare la strada egiziana perché questa lunica strada che può portare a una soluzione è a uncessate il fuoco come esperiamo tutti grati</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/2.en-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>da ent kan beide partijen samenbrengen ten tweede moeten we de commissie en de raad steunen en tensloorte moeten we de egiptische onderhandelingen steunen en dat kan leiden tot een staakwapen die wij allemaal hopen vandaag</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en (Input audio).wav" autoplay/>Your browser does not support the audio element.</audio><p>The report as it stands is far from perfect, but we believe that we have made substantial gains for energy consumers in the European Union.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>der bericht ist weit entfernt aber wir meinen dass wir wichtige spiele füre energieverbraucher in der eu gemacht haben</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>el informe es lejos de perfecto pero pensamos que hemos avanzado en los consumidores en la nolofera</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>e rapport nest pas parfait mais nous pensons que nous avons fait des jeux substantiels pour les consommateurs de lénergie dans luraine</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>relazione lontana dalla perfetta ma  pensiamo chi abbiamo  fatto deia giochi e per i consumatori</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/STS/en-X/3.en-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>d ect maar we denken dat we enorm spelen voor de energieconsumenten in de europese unie</p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="tts-samples" style="text-align: center;">Multilingual Text-to-Speech Synthesis</h2>
+	<br>
+	<h4 style="text-align: center;">English</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">UTUT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>an efficient system of so called marine spatial planning will be key to prioritising objectives and will guide managers policy makers and stakeholders</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/en/1.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>we do not accept that single minded austerity is the way out</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/en/2.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>the global financial crisis also gave us a good opportunity to reconsider our priorities and actions especially in the long term management of sustainable economic recovery</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/en/3.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>the safety of an individual is a fundamental right just as much as the right to free speech and to self expression</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/en/4.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>that is simply unacceptable but i do not want to give anybody the option to vote against this amendment on human rights because of the name issue with the former yugoslav republic of macedonia so i ask to change macedonian government to government of the former yugoslav republic of macedonia '</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/en/5.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<h4 style="text-align: center;">German</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">UTUT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>wir wollen aber dass die straßburgwoche in der elften woche ist so dass ich sage hier liegt keine unzulässigkeit vor</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/de/1.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>in ihr wird das solidarische europa vor ort in den regionen sichtbar und sie sollte nicht leichtfertig aufgrund von politischen schnellschüssen aufgegeben werden</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/de/2.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>meine damen und herren wir haben in europa nicht viele rohstoffe</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/de/3.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>frau präsidentin meine damen und herren gerade jetzt in der krise zeigt sich welche europäische union wir eigentlich wirklich wollen</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/de/4.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>herr präsident frau ministerin frau kommissarin wenn man eine lehre aus kopenhagen ziehen muss wo sie frau kommissarin ja die präsidentschaft haben dann die dass die europäische union in zukunft auf solchen konferenzen mit einer stimme sprechen muss</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/de/5.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<h4 style="text-align: center;">French</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">UTUT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>on voit bien la limite de cette approche</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/fr/1.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>enfin plus polémiques et mon collègue l a soulevé tout à l heure les lacunes du système actuel des mécanismes de développement propres seront aussi à mettre sur la table</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/fr/2.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>la situation sociale a évolué très favorablement avec une progression spectaculaire du revenu moyen par habitant et désormais l immense majorité des tunisiens entrent dans les critères définissant l appartenance à la classe moyenne</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/fr/3.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>nous avons pu rencontrer l'ensemble des acteurs politiques concernés et grâce à la double origine de cette délégation à la fois a c p et européenne nous avons incarné une légitimité différente des missions européennes ou africaines</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/fr/4.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>celui ci n est plus l espace des cinq états membres des années mille neuf cent quatre vingts c est au contraire un espace qui n a cessé de s élargir ces dernières années et qui compte aujourd hui vingt cinq états dont trois qui ne sont pas membres de l union européenne</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/fr/5.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<h4 style="text-align: center;">Dutch</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">UTUT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>met tienduizenden proberen zij europa te bereiken gelokt door gewetenloze mensenhandelaars die economische gelukszoekers tegen veel geld naar europa willen brengen</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/nl/1.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>dat is onvermijdelijk want waar moeten die mensen van leven</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/nl/2.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>tot slot het eurovignet is geen wonderoplossing</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/nl/3.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>gaat baroness ashton straks eigenhandig in de lidstaten toezien op onze afvalverwerking</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/nl/4.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>deze diversiteit moeten wij koesteren en niet de nek omdraaien met nog meer centralisatie en controle vanuit brussel</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/nl/5.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- <br>
+	<h4 style="text-align: center;">Italian</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">UTUT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>è importante che il parlamento europeo faccia sentire tutta la sua pressione sulla commissione sugli stati membri gli stati membri che non si adeguano vengano sanzionati e ché vengano rafforzate le istituzioni europee che devono controllare la corruzione e la lotta al crimine organizzato</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/it/1.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>vecchio diritto d'autore che esisteva da prima del web il punto è che noi dobbiamo lavorare sul diritto d'autore e mettere da parte a c t a che è un ostacolo bocciarlo escluderlo perché è un ostacolo per il nostro lavoro</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/it/2.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>il nostro obiettivo non deve essere quello di porsi in termini negativi con questo e altri paesi di fronte al mancato immediato compimento di cambiamenti il nostro obiettivo deve essere quello di sostenere lo sforzo di questi paesi per realizzare l'obiettivo anche del rispetto del principio dei diritti umani</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/it/3.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>signor presidente onorevoli colleghi grazie al sig søvndal per l'esposizione così completa</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/it/4.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>in molte commissioni di questo parlamento ci impegniamo quotidianamente per ridurre l'onere finanziario e amministrativo che grava sulle nostre aziende ma relazioni come questa vanificano</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTS/it/5.UTUT.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div> -->
+	<br>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="ttst-samples" style="text-align: center;">Multilingual Text-to-Speech Translation</h2>
+	<br>
+	<h4 style="text-align: center;">from Spanish</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">Target Language</th>
+					<th style="text-align: center">UTUT<br>(ASR transcribed)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Todos aquí somos demócratas y, por consiguiente, militantes de la libertad; por tanto, hablemos de Cuba, de China, de Corea del Norte o, ahora, de Honduras, nuestro discurso debe ser firme frente a los liberticidas.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/1.es-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>we are all democrats and therefore activists for freedom so we talk about cuba china north korea or hondurus and or speech should be strung and firm against</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/1.es-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>alle demokraten und deswegen aggressivisten für die freiheit also kuba china nordkorea oder honduras unzar riden muss stark sein</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/1.es-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>nous sommes tous démogrates et par conséquent des militants de la liberté donc nous parlons de cuba de chine de corée du nord au honduras votre discours doit être ferme face aux liberticides</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/1.es-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>amo tutti democratici e quindi militanti della libertà quindi parliamo di cuba dicina di corea del nord di onduras a dobbiaoa difendereh</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/1.es-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>we le ma al democratisch zijn en dus vrijheidsactivisten kuba cina noord corleagondoras en wij moeten duidelijk zijn</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Dicho esto, me gustaría solicitar a la Presidencia española, a la Comisión Europea y al Consejo que utilicen toda la legislación europea que está en sus manos, tanto la existente como la futura, para proteger a las víctimas de la trata de seres humanos.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/2.es-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>lite to us the spanish presidency the commission and the council to use all the urin legislation that is in your hands both the existing and the future to protect the victims of trafficking</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/2.es-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>ich möchte die spanische präsidentschaft und den rat bittendie europäische gesetzgebung zu nutzen die opfer des menschenhandels herzuheen</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/2.es-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>je voudrais demander à la présidence espagnole à la commission et au conseil dutiliser toute la législation erene qui est entre les mains tant de l'actuell que de l'avenir pour protéger les victimes de la traite des êtres humains</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/2.es-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>to questo a chiedo alla presenza spagnola alla commissione al consiglio a d a utilizzare tutta la legislazione eurochelate a invece esiste e futura per tute laree a</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/2.es-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>ao  ed wil ik het spaanse voorzitterschap en de commissie en raad vragen om de hele europese wetgeving te gebruiken die er bestaat en de toekomst in handen is</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Hay que decir que esta crisis es la prueba más fehaciente de que la Unión Europea debe mejorar, y mucho, su sistema de alerta alimentaria y su coordinación interna.</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/3.es-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>this crisis is the most faithful proof that the urin union has to improve its food safety system and its internal coordination system</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/3.es-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>din de krise ist der beweis dafür dass die europäische union sein wandsystem verbessern muss und die interne koordinieren</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/3.es-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>cette crise est la preuve la plus fiable du fait que l'uaine doit améliorer son système d'alerte alimentaire et sa coordination interne</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Italian</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/3.es-to-it (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>la crisi e la prova più fiduciosa del fatto che l'un anoorocità deve migliorare il suo sistema di alerta alimentare e di coordinamento interno</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/es-X/3.es-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>de risis is de meeste duidelijke bewijs dat de europese unie zijn levensmiddelen systeem verbetert en interne co rdinatie</p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<h4 style="text-align: center;">from Italian</h4>
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th style="text-align: center">Source</th>
+					<th style="text-align: center">Target Language</th>
+					<th style="text-align: center">UTUT<br>(ASR transcribed)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Vi è piena consapevolezza che questo processo sia molto complesso, ma siamo in mezzo a un guado, difficile e impegnativo, che non può tollerare cali di attenzione e che ha bisogno di adeguati investimenti e</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/1.it-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>fully aware that this process is a very complex process but we are in the middle of a difficult and committing place which cannot tolerate  cuts and which needs adequate investments</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/1.it-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>wir wissen dasss dieser prozess sehr komplex ist aber wir estehen in einer schwierigen politik die nicht uesteigen darf</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/1.it-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>somos conscientes de que este proceso es muy complejo pero estamos enel medio de un camino difícil que no puede tolerar una caída de atención que necesita inversiones adecu</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/1.it-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>nous sommes tout à fait conscients que ce processus est un processus très complexe mais nous sommes en pleine mesure à un défi qui ne peut pas tolérer des investissements</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/1.it-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>w volledig beseft dat dit een ingewikkeld proces is maar we zitten in een moeilijke situatie en we kunnen niete aandachten afvaarden en we kunnen nietde aandacht</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Signor Presidente, onorevoli colleghi, il completamento del mercato interno dei servizi postali entro la fine di quest'anno è un passo importante, ma sarebbe</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/2.it-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>president colik finishing the internal notted for postal services by the end of this year is an important step forward but it would be a major step</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/2.it-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>liebe kollegen die vollendung des binnenmarktes für poster dienste bis ende des jahres ist ein wichtiger schritt aber</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/2.it-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>sñorias el completamiento del mercado interior de los servicios postales antes de finales de ese año es un paso importantepero sería i</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/2.it-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>monsieur le présidentlachèvement du marché intérieur des services postaux dici à la fin de cette année est une étape importante mais il s'agit</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/2.it-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>zier fotooie van de interne postdiensten voor het einde van dit jaar is een belangrijke stap maar</p></td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="vertical-align: middle; text-align: center"><p>Vi è poi la questione circa i settori cui dare la priorità dei finanziamenti: l'educazione, la salute, la protezione dell'ambiente, la capacità del buongoverno o sviluppo delle piccole imprese?</p></td>
+					<td style="vertical-align: middle; text-align: center"><p>English</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/3.it-to-en (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>then the question is about the sectors were to give funding priority to funding education health protection of the environment the capacity of good governance and development of small businesses</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>German</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/3.it-to-de (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>dann die frage in welchen bereichen die finanzierung priorität gben gesundheit schutz umwelte und kleine unternehmen</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Spanish</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/3.it-to-es (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>además hablamos de los sectores en los que la financiación la educación las anida la protección del medioambiente la capacidad de la buena gobernanza o el desarrollo de las pimes</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>French</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/3.it-to-fr (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>et puis la question sur les secteurs dont léducation la santé la protection de lenvironnement la capacité de bonne gouvernance au développement des petites et moyennes entreprises</p></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: middle; text-align: center"><p>Dutch</p></td>
+					<td style="vertical-align: middle; text-align: center"><audio controls="controls" style="width: 240px;"><source src="audios/TTST/it-X/3.it-to-nl (Prediction).wav" autoplay/>Your browser does not support the audio element.</audio><p>da e vraagstukken en reevare prioriteiten voor financiering onderwijs gezondheid goed bestuur enzovoort de kleine bedrijven moeten vooroop staan</p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+</div>
+
+
+</article>
+</main>
+</div>
+
+</body>
+</html>
