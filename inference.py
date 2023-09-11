@@ -91,15 +91,15 @@ def main(args):
         use_cuda=use_cuda
     )
 
-    for src_speech_path, tgt_speech_path in tqdm.tqdm(
-        zip(args.src_speech_path, args.tgt_speech_path),
-        total=min(len(args.src_speech_path), len(args.tgt_speech_path))
+    for in_wav_path, out_wav_path in tqdm.tqdm(
+        zip(args.in_wav_path, args.out_wav_path),
+        total=min(len(args.in_wav_path), len(args.out_wav_path))
     ):
-        src_unit = pipeline.process_speech2unit(src_speech_path)
+        src_unit = pipeline.process_speech2unit(in_wav_path)
         tgt_unit = pipeline.process_unit2unit(src_unit)
         tgt_speech = pipeline.process_unit2speech(tgt_unit)
 
-        save_speech(tgt_speech.detach().cpu().numpy(), tgt_speech_path)
+        save_speech(tgt_speech.detach().cpu().numpy(), out_wav_path)
 
 def cli_main():
     parser = argparse.ArgumentParser()

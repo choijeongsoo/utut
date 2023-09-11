@@ -27,17 +27,17 @@ def main(args):
 
     hubert_reader, kmeans_model = load_model(args.mhubert_path, args.kmeans_path, use_cuda=use_cuda)
 
-    for src_speech_path, src_unit_path in tqdm.tqdm(
-        zip(args.src_speech_path, args.src_unit_path),
-        total=min(len(args.src_speech_path), len(args.src_unit_path))
+    for in_wav_path, out_unit_path in tqdm.tqdm(
+        zip(args.in_wav_path, args.out_unit_path),
+        total=min(len(args.in_wav_path), len(args.out_unit_path))
     ):
-        feats = hubert_reader.get_feats(src_speech_path)
+        feats = hubert_reader.get_feats(in_wav_path)
         feats = feats.cpu().numpy()
 
         pred = kmeans_model.predict(feats)
         pred_str = " ".join(str(p) for p in pred)
 
-        save_unit(pred_str, src_unit_path)
+        save_unit(pred_str, out_unit_path)
 
 def cli_main():
     parser = argparse.ArgumentParser()

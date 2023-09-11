@@ -40,11 +40,11 @@ def main(args):
 
     task, generator = load_model(args.utut_path, args.src_lang, args.tgt_lang, use_cuda=use_cuda)
 
-    for src_unit_path, tgt_unit_path in tqdm.tqdm(
-        zip(args.src_unit_path, args.tgt_unit_path),
-        total=min(len(args.src_unit_path), len(args.tgt_unit_path))
+    for in_unit_path, out_unit_path in tqdm.tqdm(
+        zip(args.in_unit_path, args.out_unit_path),
+        total=min(len(args.in_unit_path), len(args.out_unit_path))
     ):
-        with open(src_unit_path) as f:
+        with open(in_unit_path) as f:
             unit = list(map(int, f.readline().strip().split()))
         unit = task.source_dictionary.encode_line(
             " ".join(map(lambda x: str(x), process_units(unit, reduce=True))),
@@ -73,7 +73,7 @@ def main(args):
             extra_symbols_to_ignore=get_symbols_to_strip_from_output(generator)
         )
 
-        save_unit(pred_str, tgt_unit_path)
+        save_unit(pred_str, out_unit_path)
 
 def cli_main():
     parser = argparse.ArgumentParser()

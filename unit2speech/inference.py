@@ -23,11 +23,11 @@ def main(args):
 
     vocoder = load_model(args.vocoder_path, args.vocoder_cfg_path, use_cuda=use_cuda)
 
-    for tgt_unit_path, tgt_speech_path in tqdm.tqdm(
-        zip(args.tgt_unit_path, args.tgt_speech_path),
-        total=min(len(args.tgt_unit_path), len(args.tgt_speech_path))
+    for in_unit_path, out_wav_path in tqdm.tqdm(
+        zip(args.in_unit_path, args.out_wav_path),
+        total=min(len(args.in_unit_path), len(args.out_wav_path))
     ):
-        with open(tgt_unit_path) as f:
+        with open(in_unit_path) as f:
             unit = list(map(int, f.readline().strip().split()))
 
         sample = {
@@ -37,7 +37,7 @@ def main(args):
 
         wav = vocoder(sample, dur_prediction=True)
 
-        save_speech(wav.detach().cpu().numpy(), tgt_speech_path)
+        save_speech(wav.detach().cpu().numpy(), out_wav_path)
 
 def cli_main():
     parser = argparse.ArgumentParser()
