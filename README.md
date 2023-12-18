@@ -1,3 +1,3 @@
-# UTUT: Many-to-Many Spoken Language Translation via Unified Speech and Text Representation Learning with Unit-to-Unit Translation
+# UTUT: Textless Unit-to-Unit Pre-training with Many-to-Many Language Translation for Multimodal-to-Speech Machine Translation
 
-\[[Paper](https://arxiv.org/abs/2308.01831)\] \[[Project](https://choijeongsoo.github.io/utut)\]
+\[[Demo](https://choijeongsoo.github.io/utut)\]
