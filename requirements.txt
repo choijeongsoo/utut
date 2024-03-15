@@ -1,0 +1,3 @@
+joblib
+soundfile
+TTS==0.19.1

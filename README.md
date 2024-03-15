@@ -9,12 +9,15 @@ Official PyTorch implementation for the following paper:
 
 
 ## Setup
+Python >=3.7,<3.11
 ```
 git clone -b main --single-branch https://github.com/choijeongsoo/utut
 cd utut
 git submodule init
 git submodule update
-pip install --editable fairseq
+pip install -e fairseq
+pip install -r requirements.txt
+apt-get install espeak
 ```
 
 ## Model Checkpoints
@@ -32,8 +35,10 @@ pip install --editable fairseq
   Task | Pretraining Data | Model
   |---|---|---
   STS | [VoxPopuli](https://github.com/facebookresearch/voxpopuli) (from year 2013), [mTEDx](https://www.openslr.org/100) | [download](https://drive.google.com/file/d/1MEETNogbSgmqkhvzIO4SRSbh0o0dV-Sr/view?usp=sharing)
+  TTS | [VoxPopuli](https://github.com/facebookresearch/voxpopuli) (from year 2013), [mTEDx](https://www.openslr.org/100) | [download](https://drive.google.com/file/d/17CqXLMftL0BBaa_GAbLLzYPDTDRzpbma/view?usp=sharing)
+  TTST | [VoxPopuli](https://github.com/facebookresearch/voxpopuli) (from year 2013), [mTEDx](https://www.openslr.org/100) | [download](https://drive.google.com/file/d/1etg6FMqIh3uaimaVpEuLVvBA8Rluh57Q/view?usp=sharing)
 
-Current versiocn only provides pre-trained UTUT model checkpoint and inference code for multilingual speech-to-speech translation.
+<!-- Current versiocn only provides pre-trained UTUT model checkpoint and inference code for multilingual speech-to-speech translation. -->
 
 ### Unit to Speech Synthesis
 
@@ -54,10 +59,10 @@ Current versiocn only provides pre-trained UTUT model checkpoint and inference c
 UTUT is pre-trained on Voxpopuli and mTEDx, where a large portion of data is from European Parliament events. <br>
 Before utilizing the pre-trained model, please consider the data domain where you want to apply it.
 
-### Overall Pipeline for Speech-to-Speech Translation (STS)
+### Pipeline for Speech-to-Speech Translation (STS)
 ```
 $ cd utut
-$ PYTHONPATH=fairseq python inference.py \
+$ PYTHONPATH=fairseq python inference_sts.py \
   --in-wav-path samples/en/1.wav samples/en/2.wav samples/en/3.wav \
   --out-wav-path samples/es/1.wav samples/es/2.wav samples/es/3.wav \
   --src-lang en --tgt-lang es \
@@ -68,6 +73,35 @@ $ PYTHONPATH=fairseq python inference.py \
   --vocoder-cfg-path /path/to/config_es.json
 ```
 
+### Pipeline for Text-to-Speech Synthesis (TTS)
+```
+$ cd utut
+$ PYTHONPATH=fairseq python inference_tts.py \
+  --in-txt-path samples/en/a.txt samples/en/b.txt samples/en/c.txt \
+  --out-wav-path samples/en/a.wav samples/en/b.wav samples/en/c.wav \
+  --src-lang en --tgt-lang en \
+  --utut-path /path/to/utut_tts.pt \
+  --vocoder-path /path/to/vocoder_en.pt \
+  --vocoder-cfg-path /path/to/config_en.json
+```
+
+### Pipeline for Text-to-Speech Translation (TTST)
+```
+$ cd utut
+$ PYTHONPATH=fairseq python inference_tts.py \
+  --in-txt-path samples/en/a.txt samples/en/b.txt samples/en/c.txt \
+  --out-wav-path samples/es/a.wav samples/es/b.wav samples/es/c.wav \
+  --src-lang en --tgt-lang es \
+  --utut-path /path/to/utut_ttst.pt \
+  --vocoder-path /path/to/vocoder_es.pt \
+  --vocoder-cfg-path /path/to/config_es.json
+```
+
+19 source languages: en (English), es (Spanish), fr (French), it (Italian), pt (Portuguese), el (Greek), ru (Russian), cs (Czech), da (Danish), de (German), fi (Finnish), hr (Croatian), hu (Hungarian), lt (Lithuanian), nl (Dutch), pl (Polish), ro (Romanian), sk (Slovak), and sl (Slovene)
+
+6 target languages: en (English), es (Spanish), fr (French), it (Italian), de (German), and nl (Dutch)
+
+<!-- 
 ### Load a UTUT pre-trained model
 ```
 $ cd utut
@@ -114,7 +148,7 @@ $ python -m unit2speech.inference \
 ```
 
 We support 6 languages: en (English), es (Spanish), fr (French), it (Italian), de (German), and nl (Dutch)
-
+ -->
 
 ## Acknowledgement
 

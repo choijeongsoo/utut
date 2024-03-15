@@ -1,0 +1,203 @@
+{
+    "model": "vits",
+    "run_name": "",
+    "run_description": "",
+    "epochs": 10000,
+    "batch_size": null,
+    "eval_batch_size": null,
+    "mixed_precision": false,
+    "scheduler_after_epoch": true,
+    "run_eval": true,
+    "test_delay_epochs": 0,
+    "print_eval": false,
+    "print_step": 25,
+    "tb_plot_step": 100,
+    "tb_model_param_stats": false,
+    "save_step": 10000,
+    "checkpoint": true,
+    "keep_all_best": false,
+    "keep_after": 10000,
+    "num_loader_workers": null,
+    "num_eval_loader_workers": 0,
+    "use_noise_augment": false,
+    "output_path": null,
+    "distributed_backend": "nccl",
+    "distributed_url": "tcp://localhost:54321",
+    "audio": {
+        "fft_size": 1024,
+        "win_length": 1024,
+        "hop_length": 256,
+        "frame_shift_ms": null,
+        "frame_length_ms": null,
+        "stft_pad_mode": "reflect",
+        "sample_rate": 22050,
+        "resample": false,
+        "preemphasis": 0.0,
+        "ref_level_db": 20,
+        "do_sound_norm": false,
+        "log_func": "np.log10",
+        "do_trim_silence": true,
+        "trim_db": 45,
+        "power": 1.5,
+        "griffin_lim_iters": 60,
+        "num_mels": 80,
+        "mel_fmin": 0.0,
+        "mel_fmax": null,
+        "spec_gain": 20,
+        "do_amp_to_db_linear": true,
+        "do_amp_to_db_mel": true,
+        "signal_norm": true,
+        "min_level_db": -100,
+        "symmetric_norm": true,
+        "max_norm": 4.0,
+        "clip_norm": true,
+        "stats_path": null
+    },
+    "use_phonemes": true,
+    "phoneme_language": "en",
+    "compute_input_seq_cache": false,
+    "text_cleaner": "phoneme_cleaners",
+    "phonemizer": "espeak",
+    "enable_eos_bos_chars": false,
+    "test_sentences_file": "",
+    "phoneme_cache_path": null,
+    "characters":{
+	"characters_class": "TTS.tts.models.vits.VitsCharacters",
+        "pad": "_",
+        "eos": "",
+        "bos": "",
+        "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+        "punctuations":";:,.!?¡¿—…\"«»“” ",
+        "phonemes":"ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜɨɪʝɭɬɫɮʟɱɯɰŋɳɲɴøɵɸθœɶʘɹɺɾɻʀʁɽʂʃʈʧʉʊʋⱱʌɣɤʍχʎʏʑʐʒʔʡʕʢǀǁǂǃˈˌːˑʼʴʰʱʲʷˠˤ˞↓↑→↗↘'̩'ᵻ"
+    },
+    "batch_group_size": 0,
+    "loss_masking": null,
+    "min_seq_len": 13,
+    "max_seq_len": 200,
+    "compute_f0": false,
+    "compute_linear_spec": true,
+    "add_blank": true,
+    "datasets": [
+        {
+            "name": "",
+            "path": "",
+            "meta_file_train": "",
+            "ununsed_speakers": null,
+            "meta_file_val": "",
+            "meta_file_attn_mask": ""
+        }
+    ],
+    "optimizer": "AdamW",
+    "optimizer_params": {
+        "betas": [
+            0.8,
+            0.99
+        ],
+        "eps": 1e-09,
+        "weight_decay": 0.01
+    },
+    "lr_scheduler": "",
+    "lr_scheduler_params": {},
+    "test_sentences": [
+        "It took me quite a long time to develop a voice, and now that I have it I'm not going to be silent.",
+        "Be a voice, not an echo.",
+        "I'm sorry Dave. I'm afraid I can't do that.",
+        "This cake is great. It's so delicious and moist.",
+        "Prior to November 22, 1963."
+    ],
+    "use_speaker_embedding": false,
+    "use_d_vector_file": false,
+    "d_vector_dim": 0,
+    "model_args": {
+        "num_chars": 179,
+        "out_channels": 513,
+        "spec_segment_size": 32,
+        "hidden_channels": 192,
+        "hidden_channels_ffn_text_encoder": 768,
+        "num_heads_text_encoder": 2,
+        "num_layers_text_encoder": 6,
+        "kernel_size_text_encoder": 3,
+        "dropout_p_text_encoder": 0.1,
+        "kernel_size_posterior_encoder": 5,
+        "dilation_rate_posterior_encoder": 1,
+        "num_layers_posterior_encoder": 16,
+        "kernel_size_flow": 5,
+        "dilation_rate_flow": 1,
+        "num_layers_flow": 4,
+        "resblock_type_decoder": "1",
+        "resblock_kernel_sizes_decoder": [
+            3,
+            7,
+            11
+        ],
+        "resblock_dilation_sizes_decoder": [
+            [
+                1,
+                3,
+                5
+            ],
+            [
+                1,
+                3,
+                5
+            ],
+            [
+                1,
+                3,
+                5
+            ]
+        ],
+        "upsample_rates_decoder": [
+            8,
+            8,
+            2,
+            2
+        ],
+        "upsample_initial_channel_decoder": 512,
+        "upsample_kernel_sizes_decoder": [
+            16,
+            16,
+            4,
+            4
+        ],
+        "use_sdp": true,
+        "noise_scale": 1.0,
+        "inference_noise_scale": 0.667,
+        "length_scale": 1,
+        "noise_scale_dp": 1.0,
+        "inference_noise_scale_dp": 0.8,
+        "max_inference_len": null,
+        "init_discriminator": false,
+        "use_spectral_norm_disriminator": false,
+        "use_speaker_embedding": false,
+        "num_speakers": 0,
+        "speakers_file": null,
+        "speaker_embedding_channels": 256,
+        "use_d_vector_file": false,
+        "d_vector_dim": 0,
+        "detach_dp_input": true
+    },
+    "grad_clip": [
+        5,
+        5
+    ],
+    "lr_gen": 0.0002,
+    "lr_disc": 0.0002,
+    "lr_scheduler_gen": "ExponentialLR",
+    "lr_scheduler_gen_params": {
+        "gamma": 0.999875,
+        "last_epoch": -1
+    },
+    "lr_scheduler_disc": "ExponentialLR",
+    "lr_scheduler_disc_params": {
+        "gamma": 0.999875,
+        "last_epoch": -1
+    },
+    "kl_loss_alpha": 1.0,
+    "disc_loss_alpha": 1.0,
+    "gen_loss_alpha": 1.0,
+    "feat_loss_alpha": 1.0,
+    "mel_loss_alpha": 45.0,
+    "return_wav": true,
+    "r": 1
+}

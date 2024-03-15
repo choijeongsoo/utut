@@ -6,7 +6,7 @@ import torch
 from fairseq import checkpoint_utils, utils
 from fairseq_cli.generate import get_symbols_to_strip_from_output
 
-from unit2unit.utut_pretraining import UTUTPretrainingTask
+from unit2unit.task import UTUTPretrainingTask
 from util import process_units, save_unit
 
 def load_model(model_path, src_lang, tgt_lang, use_cuda=False):
