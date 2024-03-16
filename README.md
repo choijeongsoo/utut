@@ -1,4 +1,4 @@
-# UTUT: Textless Unit-to-Unit Pre-training for Many-to-Many Multimodal-to-Speech Machine Translation by Learning Unified Speech and Text Representations
+# UTUT
 
 Official PyTorch implementation for the following paper:
 > **Textless Unit-to-Unit Pre-training for Many-to-Many Multimodal-to-Speech Machine Translation by Learning Unified Speech and Text Representations**<br>
