@@ -164,7 +164,7 @@ If our work is useful for your research, please cite the following paper:
   title={Textless Unit-to-Unit training for Many-to-Many Multilingual Speech-to-Speech Translation},
   author={Kim, Minsu and Choi, Jeongsoo and Kim, Dahun and Ro, Yong Man},
   journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing},
-  year={2024},
+  year={2024}
 }
 @inproceedings{choi2024av2av,
   title={AV2AV: Direct Audio-Visual Speech to Audio-Visual Speech Translation with Unified Audio-Visual Speech Representation},
