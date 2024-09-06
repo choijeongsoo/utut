@@ -3,6 +3,7 @@
 Official PyTorch implementation for the following paper:
 > **Textless Unit-to-Unit training for Many-to-Many Multilingual Speech-to-Speech Translation**<br>
 > [Minsu Kim](https://sites.google.com/view/ms-dot-k)\*, [Jeongsoo Choi](https://choijeongsoo.github.io)\*, [Dahun Kim](https://mcahny.github.io), [Yong Man Ro](https://www.ivllab.kaist.ac.kr/people/professor)<br>
+> IEEE/ACM Transactions on Audio, Speech, and Language Processing<br>
 > \[[Paper](https://arxiv.org/abs/2308.01831)\] \[[Demo](https://choijeongsoo.github.io/utut)\]
 
 <div align="center"><img width="80%" src="imgs/fig1.png?raw=true"/></div>
