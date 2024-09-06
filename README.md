@@ -1,9 +1,9 @@
 # UTUT
 
 Official PyTorch implementation for the following paper:
-> **Textless Unit-to-Unit Pre-training for Many-to-Many Multimodal-to-Speech Machine Translation by Learning Unified Speech and Text Representations**<br>
+> **Textless Unit-to-Unit training for Many-to-Many Multilingual Speech-to-Speech Translation**<br>
 > [Minsu Kim](https://sites.google.com/view/ms-dot-k)\*, [Jeongsoo Choi](https://choijeongsoo.github.io)\*, [Dahun Kim](https://mcahny.github.io), [Yong Man Ro](https://www.ivllab.kaist.ac.kr/people/professor)<br>
-> \[[Demo](https://choijeongsoo.github.io/utut)\]
+> \[[Paper](https://arxiv.org/abs/2308.01831)\] \[[Demo](https://choijeongsoo.github.io/utut)\]
 
 <div align="center"><img width="80%" src="imgs/fig1.png?raw=true"/></div>
 
@@ -159,9 +159,15 @@ This repository is built upon [Fairseq](https://github.com/pytorch/fairseq) and 
 
 If our work is useful for your research, please cite the following paper:
 ```bibtex
-@article{kim2023many,
-    title={Many-to-Many Spoken Language Translation via Unified Speech and Text Representation Learning with Unit-to-Unit Translation},
-    author={Minsu Kim and Jeongsoo Choi and Dahun Kim and Yong Man Ro},
-    journal={arXiv preprint arXiv:2308.01831},
-    year={2023}
+@article{kim2024textless,
+  title={Textless Unit-to-Unit training for Many-to-Many Multilingual Speech-to-Speech Translation},
+  author={Kim, Minsu and Choi, Jeongsoo and Kim, Dahun and Ro, Yong Man},
+  journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year={2024},
+}
+@inproceedings{choi2024av2av,
+  title={AV2AV: Direct Audio-Visual Speech to Audio-Visual Speech Translation with Unified Audio-Visual Speech Representation},
+  author={Choi, Jeongsoo and Park, Se Jin and Kim, Minsu and Ro, Yong Man},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2024}
 }
